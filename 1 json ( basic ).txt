@@ -1,0 +1,211 @@
+What is JSON?
+
+JSON stands for JavaScript Object Notation
+JSON is a lightweight data-interchange format
+JSON is plain text written in JavaScript object notation
+JSON is used to send data between computers
+JSON is language independent.
+--------------------------------------------------------------------------------
+
+JSON Syntax Rules
+
+JSON syntax is derived from JavaScript object notation syntax:
+
+	-Data is in name/value pairs
+	-Data is separated by commas
+	-Curly braces hold objects
+	-Square brackets hold arrays
+
+----------------------------------------------------------------------------------
+JSON - Evaluates to JavaScript Objects
+The JSON format is almost identical to JavaScript objects.
+
+1)	In JSON, keys must be strings, written with double quotes:
+	
+	(JSON)
+	{"name":"John"}
+
+
+2)In JavaScript, keys can be strings, numbers, or identifier names:
+
+	(JavaScript)
+
+	{name:"John"}
+-------------------------------------------------------------------------------------
+
+JSON Values
+-------------
+
+In JSON, values must be one of the following data types:
+
+-a string
+-a number
+-an object
+-an array
+-a boolean
+-null
+
+In JavaScript values can be all of the above, plus any other valid JavaScript expression, including:
+
+-a function
+-a date
+-undefined
+In JSON, string values must be written with double quotes:
+
+--------------------------------------------------------------------------------------------------------------------
+
+JSON Strings
+-------------
+Strings in JSON must be written in double quotes.
+Example
+{"name":"John"}
+
+
+JSON Numbers
+-----------
+Numbers in JSON must be an integer or a floating point.
+Example
+{"age":30}
+
+
+JSON Objects
+----------------
+Values in JSON can be objects.
+Example
+{
+"employee":{"name":"John", "age":30, "city":"New York"}
+}
+
+Objects as values in JSON must follow the JSON syntax.
+
+
+JSON Arrays
+---------------
+Values in JSON can be arrays.
+
+Example
+{
+"employees":["John", "Anna", "Peter"]
+}
+
+
+JSON Booleans
+----------------
+Values in JSON can be true/false.
+Example
+{"sale":true}
+
+
+JSON null
+---------
+Values in JSON can be null.
+Example
+{"middlename":null}
+
+_____________________________________________________________________________________________________________
+
+JSON.parse()
+----------------
+A common use of JSON is to exchange data to/from a web server.
+
+When receiving data from a web server, the data is always a string.
+
+Parse the data with JSON.parse(), and the data becomes a JavaScript object.
+
+---------------------------------
+
+Example - Parsing JSON
+Imagine we received this text from a web server:
+---------------------------------
+'{"name":"John", "age":30, "city":"New York"}'
+--------------------------------
+
+Use the JavaScript function JSON.parse() to convert text into a JavaScript object:
+
+--------------------------------------
+const obj = JSON.parse('{"name":"John", "age":30, "city":"New York"}');
+----------------------------------------------
+Make sure the text is in JSON format, or else you will get a syntax error.
+
+
+-----------------------------------------------
+
+Use the JavaScript object in your page:
+
+Example
+<p id="demo"></p>
+
+<script>
+document.getElementById("demo").innerHTML = obj.name;
+</script>
+
+-----------------------------------------------
+Array as JSON
+When using the JSON.parse() on a JSON derived from an array, the method will return a JavaScript array, instead of a JavaScript object.
+
+Example
+const text = '["Ford", "BMW", "Audi", "Fiat"]';
+const myArr = JSON.parse(text);
+-----------------------------------------------
+
+Exceptions
+----------
+Parsing Dates
+---------------------
+
+-Date objects are not allowed in JSON.
+
+-If you need to include a date, write it as a string.
+
+-You can convert it back into a date object later:
+
+
+
+Example
+----------------------
+Convert a string into a date:
+
+const text = '{"name":"John", "birth":"1986-12-14", "city":"New York"}';
+const obj = JSON.parse(text);
+obj.birth = new Date(obj.birth);
+
+document.getElementById("demo").innerHTML = obj.name + ", " + obj.birth;
+
+--------------------------------------------
+Or, you can use the second parameter, of the JSON.parse() function, called reviver.
+
+The reviver parameter is a function that checks each property, before returning the value.
+
+Example
+Convert a string into a date, using the reviver function:
+
+const text = '{"name":"John", "birth":"1986-12-14", "city":"New York"}';
+const obj = JSON.parse(text, function (key, value) {
+  if (key == "birth") {
+    return new Date(value);
+  } else {
+    return value;
+  }
+});
+
+document.getElementById("demo").innerHTML = obj.name + ", " + obj.birth;
+
+------------------------------------------------------------------------------------------------
+
+Parsing Functions
+
+Functions are not allowed in JSON.
+
+If you need to include a function, write it as a string.
+
+You can convert it back into a function later:
+
+Example
+Convert a string into a function:
+
+const text = '{"name":"John", "age":"function () {return 30;}", "city":"New York"}';
+const obj = JSON.parse(text);
+obj.age = eval("(" + obj.age + ")");
+
+document.getElementById("demo").innerHTML = obj.name + ", " + obj.age();
+---------------------------------------------------------------------------------------------------------

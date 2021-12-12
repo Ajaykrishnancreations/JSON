@@ -1,0 +1,74 @@
+Passing the data from (json) into (web page[.html]) by  useing a XAMPP applications.
+------------------------------------------------------------------------------------
+
+steps to do : 
+------------
+
+	* Open a XAMPP folder in local-Disck(c:)
+
+	* next open the (htdocs) file and create a folder EX:(ajax or any name)
+
+	* create a new html file(index.html)
+	  and
+	  create a json file for store a datas (a.json)
+
+	* Next to start the XAMPP application 
+		-To start the Apache
+---------------------------------------------------------------
+
+_______________________________________________________________________________________________________________  
+index.html 
+-----------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <title>Json</title>
+    
+    <script>
+        var v1=new XMLHttpRequest();
+        v1.onreadystatechange=function(){
+            if(this.readyState==4 && this.status==200){
+                
+                var v2=JSON.parse(v1.responseText);
+                
+                //console.log(v2.a);
+                var v3=v2.a;
+                var t=" ";
+                    for(var i=0;i<v3.length;i++)
+                        {
+                            t+="<li>"+v3[i].name+" "+v3[i].age+"</li>"
+                        }
+                            document.getElementById("o").innerHTML=t;
+            }
+        };
+        v1.open("GET","data.json",true);
+        v1.send();
+    </script>
+
+</head>
+<body>
+    <ol id="o"></ol>
+</body>
+</html>
+__________________________________________________________________________________________________________________
+data.json
+-------------
+{
+    "a":[
+        {
+            "name":"Abi",
+            "age":28
+        },
+        {
+            "name":"Anu",
+            "age":25            
+        },
+        {
+            "name":"Ajai",
+            "age":21}
+    ]
+}
+
+_____________________________________________________________________________________________________________________

@@ -1,0 +1,9 @@
+XAMPP Application link 
+
+https://www.apachefriends.org/download.html
+download the app in .exe format
+
+how to use
+opean the the XAMPP App and start the 
+Apache 
+after stop it
